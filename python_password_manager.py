@@ -11,8 +11,9 @@ def load_key():
     file.close
     return key
 
-key = load.key()
 master_pwd = input("What is the master password? ")
+key = load.key() +master_pwd.encode
+fer = Fernet(key)
 
 def view():
     with open("passwords.txt", 'r') as f:
@@ -26,7 +27,7 @@ def add():
     pwd = input("Password: ")
 
     with open("passwords.txt", 'a') as f:
-        f.write(name + "|" + pwd + "\n")
+        f.write(name + "|" + str(fer.encrypt(pwd.encode())) + "\n")
 
 while True:
     mode = input("type add for add a new password or type view for view a password ").lower()
